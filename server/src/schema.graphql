@@ -3,6 +3,7 @@ type Query {
 }
 
 type Item {
+  id: ID!
   title: String!
   description: String!
   price: Int!
