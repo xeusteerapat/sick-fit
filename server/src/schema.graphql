@@ -1,12 +1,21 @@
 type Query {
-  hi: String
-  dogs: [Dog]!
+  items: [Item]!
+}
+
+type Item {
+  title: String!
+  description: String!
+  price: Int!
+  image: String
+  largeImage: String
 }
 
 type Mutation {
-  createDog(name: String!): Dog!
-}
-
-type Dog {
-  name: String!
+  createItem(
+    title: String!
+    description: String!
+    price: Int!
+    image: String
+    largeImage: String
+  ): Item!
 }
