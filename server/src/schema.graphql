@@ -8,6 +8,7 @@ type Query {
     first: Int
   ): [Item]!
   item(where: ItemWhereUniqueInput!): Item
+  itemsConnection(where: ItemWhereInput): ItemConnection!
 }
 
 type Item {
