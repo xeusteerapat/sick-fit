@@ -54,12 +54,12 @@ export const GlobalStyle = createGlobalStyle`
 function About({ children }) {
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyle />
       <StyledPage>
         <Meta />
         <Header />
         <Inner>{children}</Inner>
       </StyledPage>
-      <GlobalStyle />
     </ThemeProvider>
   );
 }
