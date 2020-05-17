@@ -117,7 +117,7 @@ class CreateItem extends Component {
                 />
               </label>
               <label htmlFor="description">
-                Price
+                Description
                 <textarea
                   type="number"
                   id="description"
