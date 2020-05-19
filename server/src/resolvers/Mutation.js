@@ -67,7 +67,7 @@ const Mutation = {
     return user;
   },
   signin: async (parent, { email, password }, ctx, info) => {
-    const user = await ctx.db.query({
+    const user = await ctx.db.query.user({
       where: { email }
     });
 
