@@ -3,22 +3,18 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Form from './styles/Form';
 import ErrorMessage from './ErrorMessage';
-import { CURRENT_USER_QUERY } from './User';
 
-const SIGNIN_MUTATION = gql`
-  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-    signin(email: $email, password: $password) {
-      id
-      email
-      name
+const REQUEST_RESET_MUTATION = gql`
+  mutation REQUEST_RESET_MUTATION($email: String!) {
+    requestReset(email: $email) {
+      message
     }
   }
 `;
 
-export default class SignIn extends Component {
+export default class RequestReset extends Component {
   state = {
-    email: '',
-    password: ''
+    email: ''
   };
 
   handleChange = e => {
@@ -29,27 +25,25 @@ export default class SignIn extends Component {
 
   render() {
     return (
-      <Mutation
-        mutation={SIGNIN_MUTATION}
-        variables={this.state}
-        refetchQueries={[{ query: CURRENT_USER_QUERY }]}
-      >
-        {(signin, { error, loading }) => {
+      <Mutation mutation={REQUEST_RESET_MUTATION} variables={this.state}>
+        {(requestReset, { error, loading, called }) => {
           return (
             <Form
               method="post"
               onSubmit={async e => {
                 e.preventDefault();
-                await signin();
+                await requestReset();
                 this.setState({
-                  email: '',
-                  password: ''
+                  email: ''
                 });
               }}
             >
               <fieldset disabled={loading} aria-busy={loading}>
-                <h2>Signin to Your Acctount</h2>
+                <h2>Request Password Reset</h2>
                 <ErrorMessage error={error} />
+                {!error && !loading && called && (
+                  <p>Success! Please check your email for a reset link!</p>
+                )}
                 <label htmlFor="email">
                   Email
                   <input
@@ -60,17 +54,7 @@ export default class SignIn extends Component {
                     onChange={this.handleChange}
                   />
                 </label>
-                <label htmlFor="password">
-                  Password
-                  <input
-                    name="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                  />
-                </label>
-                <button type="submit">Sign In!</button>
+                <button type="submit">Request Reset</button>
               </fieldset>
             </Form>
           );
