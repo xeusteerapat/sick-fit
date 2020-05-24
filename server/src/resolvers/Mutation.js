@@ -231,25 +231,31 @@ const Mutation = {
     // Check if that item is already in cart and increment by 1 if it is
     if (existingCartItem) {
       console.log('this item already in your cart');
-      return ctx.db.mutation.updateCartItem({
-        where: { id: existingCartItem.id },
-        data: {
-          quantity: existingCartItem.quantity + 1
-        }
-      });
+      return ctx.db.mutation.updateCartItem(
+        {
+          where: { id: existingCartItem.id },
+          data: {
+            quantity: existingCartItem.quantity + 1
+          }
+        },
+        info
+      );
     }
 
     // If it's not, create fresh CartItem for that user
-    return ctx.db.mutation.createCartItem({
-      data: {
-        user: {
-          connect: { id: userId }
-        },
-        item: {
-          connect: { id: args.id }
+    return ctx.db.mutation.createCartItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId }
+          },
+          item: {
+            connect: { id: args.id }
+          }
         }
-      }
-    });
+      },
+      info
+    );
   }
 };
 
